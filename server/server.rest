@@ -1,0 +1,25 @@
+GET http://localhost:5000/api-v1/techinfo
+###
+DELETE http://localhost:5000/api-v1/prod-services/remove/all/product
+###
+GET http://localhost:5000/api-v1/fwp-services
+###
+GET http://localhost:5000/api-v1/emr-services
+
+
+###
+GET http://localhost:5000/api-v1/users/mail/tt@t.com
+###
+GET http://localhost:5000/api-v1/prod-services/6342a9a4f94864d2448b72cb
+
+###
+
+DELETE http://localhost:5000/api-v1/cusinfo/remove/63963aa9c74463ced37476c8
+###
+PATCH  http://localhost:5000/api-v1/techinfo/update/63a54c1216fe4bf62562d97f HTTP/1.1
+content-type: application/json
+
+{
+  "status"  : "active"
+ 
+}

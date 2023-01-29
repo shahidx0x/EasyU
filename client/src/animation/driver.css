@@ -1,0 +1,25 @@
+.roll-in-blurred-left {
+  -webkit-animation: roll-in-blurred-left 0.9s cubic-bezier(0.23, 1, 0.32, 1)
+    both;
+  animation: roll-in-blurred-left 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.roll-in-blurred-right {
+  -webkit-animation: roll-in-blurred-right 0.9s cubic-bezier(0.23, 1, 0.32, 1)
+    both;
+  animation: roll-in-blurred-right 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.roll-in-blurred-top {
+  -webkit-animation: roll-in-blurred-top 0.9s cubic-bezier(0.23, 1, 0.32, 1)
+    both;
+  animation: roll-in-blurred-top 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.swing-in-top-fwd {
+  -webkit-animation: swing-in-top-fwd 0.9s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  animation: swing-in-top-fwd 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+.scale-in-center {
+  -webkit-animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
