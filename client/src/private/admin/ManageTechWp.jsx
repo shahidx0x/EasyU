@@ -3,24 +3,26 @@ import React from "react";
 import { useGetEmrServices } from "../../api/getEmrServices";
 import useGetTechinfo from "../../api/getTechinfo";
 import useGetWPinfo from "../../api/getWPinfo";
-
+import { useForm } from "react-hook-form";
+import { useGetFSM } from "../../api/getFSM";
 const ManageTech = () => {
   const [techInfo] = useGetTechinfo();
   const [wpInfo] = useGetWPinfo();
   const [emrServices] = useGetEmrServices();
+  const [fsm] = useGetFSM();
 
   return (
     <div className="flex flex-column gap-5">
       <div className="card shadow-xl w-[70rem] h-[120rem]">
         <h2 className="text-center text-3xl mt-5">Manage Technetian and Wp</h2>
         <div className="flex flex-row flex-wrap justify-center gap-4 mt-10">
-          {techInfo
+          {/* {techInfo
             ?.filter((each_tech) => each_tech.status !== "active")
-            ?.map((data, index) => (
-              <CardList key={index} props={data} />
-            ))}
-          {wpInfo?.map((data, index) => (
-            <CardListFwp key={index} props={data} />
+            ?.map((data) => (
+              <CardList key={data._id} props={data} />
+            ))} */}
+          {wpInfo?.map((data) => (
+            <CardListFwp key={data._id} props={data} />
           ))}
         </div>
       </div>
@@ -29,8 +31,11 @@ const ManageTech = () => {
           <div className="card">
             <h2 className="text-center text-2xl font-bold">Accepted Tec/Wp</h2>
             <div className="flex flex-row flex-wrap justify-center gap-4 mt-10">
-              {emrServices?.map((data, index) => (
+              {/* {emrServices?.map((data, index) => (
                 <CardListRight key={index} props={data} />
+              ))} */}
+              {fsm?.map((m) => (
+                <CardList key={m._id} props={m} />
               ))}
             </div>
           </div>
@@ -153,10 +158,28 @@ const CardList = ({ props }) => {
   );
 };
 const CardListFwp = ({ props }) => {
+  console.log(props);
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    axios
+      .post("http://localhost:5000/api-v1/add/fsm", {
+        img: props.image,
+        usr: props.full_name,
+        exp: props.exp_area,
+        num: props.cont_no,
+        lat: data.lat,
+        lng: data.lng,
+      })
+      .then(function (response) {
+        console.log(response);
+      });
+  };
   const handleDelete = (id) => {
     const url = `http://localhost:5000/api-v1/wpinfo/remove/${id}`;
     axios.delete(url);
   };
+
   return (
     <>
       <div className="w-[25rem] rounded-3xl">
@@ -169,18 +192,92 @@ const CardListFwp = ({ props }) => {
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
               {props.full_name}
             </h1>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">""</p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              {props.inst_type}
+            </p>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               {props.srv_area}
             </p>
             <h1 class="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">
-              {props.cont_no}
+              0{props.cont_no}
             </h1>
 
             <div class="flex  mt-3">
-              <button class="mr-3 px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">
+              <label
+                htmlFor="my-modal-7"
+                class="mr-3 px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600"
+              >
                 View
-              </button>
+              </label>
+              {/* modal start */}
+              <input type="checkbox" id="my-modal-7" className="modal-toggle" />
+              <div className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg text-center">
+                    Signdup Workshop Information
+                  </h3>
+                  <h1 className="mt-5 text-2xl font-mono text-gray-800 dark:text-white">
+                    Full Name :{" "}
+                    <span className="font-thin">{props.full_name}</span>
+                  </h1>
+                  <p className="font-mono mt-2 text-md text-gray-600 dark:text-gray-400">
+                    Expertise Area :
+                    <span className="font-mono">{props.v_service}</span>
+                  </p>
+                  <p className="font-mono mt-2 text-md text-gray-600 dark:text-gray-400">
+                    Service Area : {props.srv_area}
+                  </p>
+                  <p className="font-mono mt-2 text-md text-gray-600 dark:text-gray-400">
+                    mail : {props.mail}
+                  </p>
+                  <p className="font-mono mt-2 text-md text-gray-600 dark:text-gray-400">
+                    contact number : 0{props.cont_no}
+                  </p>
+                  <p className="font-mono mt-2 text-md text-gray-600 dark:text-gray-400">
+                    nid number : {props.nid}
+                  </p>
+                  <p className="font-mono mt-2 text-md text-gray-600 dark:text-gray-400">
+                    parmanent address : {props.par_add}
+                  </p>
+                  <p className="font-mono mt-2 text-md text-gray-600 dark:text-gray-400">
+                    present address : {props.pre_add}
+                  </p>
+                  <div className="border border-indigo-400 mt-2"></div>
+                  <h3 className="mt-3 font-bold text-lg text-center">
+                    Add Location Cordinate
+                  </h3>
+
+                  <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
+                    <input
+                      type="text"
+                      placeholder="insert latitude"
+                      className="input input-bordered input-primary w-full max-w-xs"
+                      {...register("lat", {})}
+                    />
+                    <input
+                      type="text"
+                      placeholder="insert longitude"
+                      className="input input-bordered input-primary w-full max-w-xs mt-3"
+                      {...register("lng", {})}
+                    />
+                    <br />
+                    <button
+                      className="mt-3 btn btn-success "
+                      type="submit"
+                      placeholder="Accept"
+                    >
+                      Accept
+                    </button>
+                  </form>
+                  <div className="modal-action">
+                    <label htmlFor="my-modal-7" className="btn">
+                      done
+                    </label>
+                  </div>
+                </div>
+              </div>
+              {/* modal end */}
+
               <button class="mr-3 px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-green-400 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">
                 Accept
               </button>
@@ -225,6 +322,67 @@ const CardListRight = ({ props }) => {
             </h1>
 
             <div class="flex  mt-3">
+              <button
+                onClick={() => handleDelete(props._id)}
+                class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-red-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const CardListFSM = ({ props }) => {
+  console.log(props);
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    axios
+      .post("http://localhost:5000/api-v1/add/fsm", {
+        img: props.image,
+        usr: props.full_name,
+        exp: props.exp_area,
+        num: props.cont_no,
+        lat: data.lat,
+        lng: data.lng,
+      })
+      .then(function (response) {
+        console.log(response);
+      });
+  };
+  const handleDelete = (id) => {
+    const url = `http://localhost:5000/api-v1/wpinfo/remove/${id}`;
+    axios.delete(url);
+  };
+
+  return (
+    <>
+      <div className="w-[25rem] rounded-3xl">
+        <div className="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+          <div className="w-2/3 bg-cover">
+            <img src={props.image} alt="" />
+          </div>
+
+          <div className="w-2/3 p-4 md:p-4">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+              {props.full_name}
+            </h1>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">""</p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              {props.srv_area}
+            </p>
+            <h1 class="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">
+              {props.cont_no}
+            </h1>
+
+            <div class="flex  mt-3">
+              <button class="mr-3 px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-green-400 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">
+                Accept
+              </button>
               <button
                 onClick={() => handleDelete(props._id)}
                 class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-red-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600"

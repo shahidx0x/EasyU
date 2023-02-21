@@ -1,4 +1,4 @@
-GET http://localhost:5000/api-v1/techinfo
+DELETE http://localhost:5000/api-v1/delete/all/fsm
 ###
 DELETE http://localhost:5000/api-v1/prod-services/remove/all/product
 ###
@@ -9,7 +9,7 @@ GET http://localhost:5000/api-v1/emr-services
 
 ###
 GET http://localhost:5000/api-v1/users/mail/tt@t.com
-###
+###  
 GET http://localhost:5000/api-v1/prod-services/6342a9a4f94864d2448b72cb
 
 ###
@@ -23,3 +23,13 @@ content-type: application/json
   "status"  : "active"
  
 }
+###
+
+###
+DELETE http://localhost:5000/api-v1/delete/all/location HTTP/1.1
+###
+DELETE http://localhost:5000/api-v1/delete/all/fsm
+###
+GET http://localhost:5000/api-v1/all/carts
+###
+DELETE http://localhost:5000/api-v1/carts/remove

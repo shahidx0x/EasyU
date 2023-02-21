@@ -5,3 +5,5 @@ export const roleServer = "http://localhost:5000/api-v1/users/mail/";
 export const allusers = "http://localhost:5000/api-v1/users";
 export const techInfoURL = "http://localhost:5000/api-v1/techinfo";
 export const WPInfoURL = "http://localhost:5000/api-v1/wpinfo";
+export const FSM = "http://localhost:5000/api-v1/get/fsm";
+export const CartsURL = "http://localhost:5000/api-v1/all/carts";

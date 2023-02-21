@@ -4,6 +4,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
     colors: {
@@ -36,5 +37,9 @@ module.exports = {
       stone: colors.stone,
     },
   },
-  plugins: [require("daisyui"), require("flowbite/plugin")],
+  plugins: [
+    require("daisyui"),
+    require("flowbite/plugin"),
+    require("tw-elements/dist/plugin"),
+  ],
 };

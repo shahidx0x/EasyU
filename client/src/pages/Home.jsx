@@ -3,10 +3,8 @@ import Help from "../components/Help";
 import { Hero } from "../components/Hero";
 import Partner from "../components/Partner";
 import Review from "../components/Review";
-import { ServiceCard } from "../components/ServiceCard";
 import States from "../components/States";
 
-import { scd } from "../Data/ServiceCardData";
 
 export const Home = () => {
   return (
